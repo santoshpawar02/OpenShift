@@ -1,0 +1,35 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--              deploying workloads to a Kubernetes cluster.               -->
+<!-- ----------------------------------------------------------------------- -->
+
+Kubernetes and Containers: Kubernetes manages containerized applications through a concept called pods, which can contain one or multiple containers. Pods are the basic unit of deployment in Kubernetes.
+
+Deploying Applications: 
+
+You can deploy applications using the kubectl command-line tool.
+The run command creates a pod with a specified name and image.
+You can also use manifest files (YAML or JSON) to define resources, which can be generated using kubectl create.
+Difference Between Commands:
+
+kubectl create attempts to create a resource and fails if it already exists.
+kubectl apply tries to create the resource but will modify it if it already exists.
+Executing Commands in Pods: The kubectl exec command allows you to run commands inside a pod, which is useful for debugging.
+This lecture sets the stage for deploying applications in Kubernetes, emphasizing the importance of understanding pods and the commands used for deployment. 
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--          differences between kubectl create and kubectl apply           -->
+<!-- ----------------------------------------------------------------------- -->
+
+Purpose:
+
+kubectl create: This command is used to create a new resource in the Kubernetes cluster. If the resource already exists, the command will fail.
+kubectl apply: This command is used to create a resource if it does not exist, or to update it if it does. It modifies the existing resource based on the provided manifest.
+Behavior:
+
+kubectl create: Fails if the resource already exists, indicating that the resource cannot be created again.
+kubectl apply: If the resource exists, it updates the resource according to the new definition provided in the manifest.
+Use Case:
+kubectl create: Best used when you are sure that the resource does not exist and you want to create it.
+kubectl apply: Ideal for managing resources over time, as it allows for both creation and updates without needing to check if the resource exists first.
+These differences are crucial for effective resource management in Kubernetes. 
