@@ -33,3 +33,29 @@ Use Case:
 kubectl create: Best used when you are sure that the resource does not exist and you want to create it.
 kubectl apply: Ideal for managing resources over time, as it allows for both creation and updates without needing to check if the resource exists first.
 These differences are crucial for effective resource management in Kubernetes. 
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--           deploy a containerized application to a Kubernetes            -->
+<!-- ----------------------------------------------------------------------- -->
+Deploy a containerized application to a Kubernetes cluster. Here are the key steps covered:
+
+Prerequisites: Ensure your Kubernetes cluster is set up and kubectl is configured. Verify your namespace using kubectl get pods.
+Deploying the Application: Use the command kubectl run to create a pod named "webserver" based on the Httpd container image from the Red Hat registry.
+Checking Pod Status: Monitor the pod's status with kubectl get pods, noting that it may initially show as "ContainerCreating" before transitioning to "Running".
+Interacting with the Pod: Use kubectl exec to execute commands within the pod, such as viewing the httpd.conf configuration file.
+Creating a Manifest File: Generate a YAML manifest file for a new pod using kubectl run with the --dry-run=client and -o yaml options.
+Applying Changes: Modify the manifest file and use kubectl apply to update the existing pod instead of creating a new one, which would fail due to name conflicts.
+Cleaning Up: Finally, delete the created pods using kubectl delete pods.
+This exercise enhances your understanding of deploying workloads in Kubernetes using kubectl and manifest files. 
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                         The kubectl run command                         -->
+<!-- ----------------------------------------------------------------------- -->
+is used to create and run a new pod in a Kubernetes cluster. Here are its main purposes:
+
+Create a Pod: It allows you to specify the name of the pod and the container image that the pod will use.
+Run a Container: The command launches a container based on the specified image within the pod.
+Quick Deployment: It provides a simple way to deploy applications quickly without needing to create a full deployment or service configuration.
+For example, the command kubectl run webserver --image=httpd creates a pod named "webserver" that runs an Httpd container. 
