@@ -1,0 +1,4 @@
+See the differences between several Kubernetes implementations, and understand how to prepare different Kubernetes flavours for this course.
+Review the basic usage of the kubectl command and understand how to connect to your Kubernetes cluster by using the CLI.
+Execute a pre-built application in your Kubernetes cluster and review the resources related to the process.
+Learn about what comes next in this specialization.
