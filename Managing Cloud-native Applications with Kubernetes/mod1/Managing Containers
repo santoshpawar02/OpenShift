@@ -1,0 +1,65 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--            deploying managed applications using Kubernetes.             -->
+<!-- ----------------------------------------------------------------------- -->
+
+Here are the key points:
+
+Pods and Containers: Kubernetes manages applications through pods, which can contain one or multiple containers. If a single-container pod crashes, the entire pod fails.
+
+Need for Automation: To improve reliability, Kubernetes uses a deployment resource that acts as a watcher. If a pod crashes, the deployment automatically creates a new pod to replace it.
+
+Declarative vs. Imperative Approach: Kubernetes employs a declarative approach, where developers specify the desired state of the application in a manifest file, and Kubernetes manages the execution. This contrasts with the imperative approach, where developers must define each step manually.
+
+**Deployment** Features: Deployments provide several benefits, including:
+Automatic Restart: If a pod fails, Kubernetes restarts it without developer intervention.
+Automatic Rollout: Updates to container images can be rolled out without downtime.
+Automatic Scaling: Kubernetes can adjust the number of pods based on resource consumption.
+This lecture emphasizes the importance of using Kubernetes to manage containerized applications effectively. 
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                         Kubernetes deployments                          -->
+<!-- ----------------------------------------------------------------------- -->
+Kubernetes deployments that can resonate with your role as a systems engineer and your interest in transitioning to a DevOps engineer.
+
+Example: E-commerce Website Management
+
+Scenario: Imagine you are managing an e-commerce website that experiences fluctuating traffic, especially during sales events.
+
+Using Kubernetes:
+
+Pods for Application Components: Your e-commerce application is containerized and deployed in Kubernetes as multiple pods. For instance, you might have separate pods for the web server, database, and payment processing.
+
+Automatic Restart: During a high-traffic sale, the payment processing pod encounters a bug and crashes. Thanks to Kubernetes' deployment feature, it automatically detects the failure and spins up a new pod to handle payment processing without any manual intervention. This ensures that customers can continue to make purchases seamlessly.
+
+Scaling: As traffic increases during the sale, Kubernetes can automatically scale the number of web server pods based on resource usage. If the CPU usage exceeds a certain threshold, Kubernetes can create additional pods to handle the load, ensuring that the website remains responsive.
+
+Rolling Updates: After the sale, you want to update the application to fix a bug. You push a new container image to the deployment. Kubernetes performs a rolling update, gradually replacing old pods with new ones without downtime, ensuring that customers can still browse and shop.
+Relevance to You:
+
+This example illustrates how Kubernetes can automate the management of applications, which is crucial for a DevOps engineer. Understanding these concepts will empower you to design resilient and scalable systems, making you a valuable asset in your desired career path.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                          If a deployment fails                          -->
+<!-- ----------------------------------------------------------------------- -->
+If a deployment fails in a production environment, several consequences and actions can occur:
+
+Consequences of a Failed Deployment:
+
+Service Downtime: If the new version of the application fails to start or crashes, users may experience downtime or degraded service, leading to a poor user experience.
+
+Data Inconsistency: If the deployment involves changes to the database schema or data, a failure could result in data inconsistency or corruption.
+
+Loss of User Trust: Frequent deployment failures can erode user trust in the application, potentially leading to a loss of customers.
+Actions Taken in Response to a Failed Deployment:
+
+Rollback: Kubernetes allows for easy rollback to the previous stable version of the application. If the new deployment fails, the system can revert to the last known good state, minimizing downtime.
+
+Monitoring and Alerts: Monitoring tools can detect deployment failures and trigger alerts to the development and operations teams, enabling them to respond quickly.
+
+Automated Recovery: Kubernetes can automatically attempt to restart failed pods. If a pod fails, Kubernetes will try to create a new instance of that pod based on the deployment configuration.
+
+Analysis and Debugging: After a failure, the team will typically analyze logs and metrics to understand the cause of the failure. This may involve checking application logs, Kubernetes events, and resource usage.
+
+Testing and Validation: To prevent future failures, teams may implement more rigorous testing and validation processes, such as automated tests, staging environments, and canary deployments.
+Understanding these potential outcomes and responses is crucial for maintaining application reliability and ensuring a smooth user experience. 
