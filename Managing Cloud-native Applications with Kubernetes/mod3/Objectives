@@ -1,0 +1,3 @@
+Leverage how to avoid applications overusing system resources.
+Review how Kubernetes evaluates application health status via probes and automatic application restart.
+Create Kubernetes resources holding application configuration and secrets, and how to make that configuration available to running applications.

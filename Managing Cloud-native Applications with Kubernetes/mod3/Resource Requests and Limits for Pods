@@ -1,0 +1,13 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--             limiting resource usage in Kubernetes clusters              -->
+<!-- ----------------------------------------------------------------------- -->
+
+limiting resource usage in Kubernetes clusters, specifically for pods. Here are the key points:
+
+Pods are containerized processes that encapsulate one or more containers.
+Resource Requests: This specifies the minimum resources a pod needs to run. It ensures that the pod is scheduled on a node with sufficient resources.
+Resource Limits: This sets a maximum on the resources a pod can consume, preventing it from exceeding specified thresholds.
+A YAML file is used to define these resource requests and limits for containers within a pod.
+Millicores are used as a unit for CPU, where 1 CPU equals 1000 millicores.
+Resources can be set directly in the YAML file or using the kubectl set command.
+You can view resource requests and limits for pods on a node, and if the metrics API is installed, you can use the kubectl top command to see resource usage metrics.

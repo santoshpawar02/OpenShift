@@ -181,4 +181,71 @@ This visual representation can help you confirm that the ingress is set up corre
 Testing with Different Paths:
 Test various paths defined in your ingress rules to ensure that each one routes to the correct backend service.
 For example, if you have paths for /login, /products, and /checkout, verify that each one works as expected.
-Using these methods will help you ensure that your ingress configuration is functioning correctly. I
+Using these methods will help you ensure that your ingress configuration is functioning correctly. 
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--   configure an ingress resource to route traffic for multiple hosts.    -->
+<!-- ----------------------------------------------------------------------- -->
+
+To configure an ingress resource to route traffic for multiple hosts in Kubernetes, you would define an ingress manifest that includes rules for each host. Here’s a step-by-step explanation:
+
+Step 1: Define the Ingress Resource
+
+Create a YAML manifest file for the ingress resource. This file will specify the hosts and their corresponding paths.
+
+Step 2: Specify the Ingress Kind
+
+Start by defining the kind of resource as Ingress and provide a name for the resource.
+
+Step 3: Define the Rules
+
+Under the spec section, you will define multiple rules, each containing:
+
+Host: The domain name for which the rule applies.
+Http: This section will contain the paths and their corresponding backend services.
+Example Ingress Manifest
+
+Here’s an example of how the ingress resource might look:
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: multi-host-ingress
+spec:
+  rules:
+  - host: host1.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: service1
+            port:
+              number: 80
+  - host: host2.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: service2
+            port:
+              number: 80
+Explanation of the Example
+
+Host 1: For host1.example.com, any request to this host will be routed to service1 on port 80.
+Host 2: For host2.example.com, any request will be routed to service2 on port 80.
+Path Type: The Prefix path type means that any request starting with the specified path (in this case, /) will be matched.
+Step 4: Apply the Ingress Resource
+
+Once you have defined the ingress resource in a YAML file, you can apply it to your Kubernetes cluster using the following command:
+
+kubectl apply -f your-ingress-file.yaml
+Step 5: Test the Configuration
+
+After applying the ingress resource, you can test it by accessing the defined hosts in a web browser or using curl to ensure that traffic is routed correctly to the respective services.
+
+This configuration allows you to manage traffic for multiple hosts efficiently within a single ingress resource.
