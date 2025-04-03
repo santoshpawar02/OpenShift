@@ -1,0 +1,58 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--    ingress router in a Kubernetes cluster. Here are the key points:     -->
+<!-- ----------------------------------------------------------------------- -->
+
+Ingress Resource: A standard Kubernetes resource that routes traffic into the cluster, defined in a YAML manifest file.
+Manifest Structure:
+Kind: Specifies the resource type as "ingress."
+Rules Section: Contains an array of rules, each with:
+Host: The domain name (e.g., hello.example.com).
+Path: The specific path for routing.
+Path Type: Can be either "exact" (matches the path exactly) or "prefix" (matches the path and anything following it).
+Backend Configuration: Specifies where the request is routed, including the service name and port (e.g., service name "hello" on port 80).
+Testing: Requests can be tested using a web browser or tools like curl, ensuring the correct host header is used.
+This lecture sets the stage for understanding how to configure and test ingress routing in Kubernetes. 
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                 test the ingress routing configuration?                 -->
+<!-- ----------------------------------------------------------------------- -->
+
+You can test the ingress routing configuration in a few ways:
+
+Web Browser:
+
+Use the configured host name (e.g., hello.example.com) in the browser's address bar. Ensure that the DNS resolution is set up correctly.
+Curl Command:
+
+Use the curl command in the terminal to send a request. For example:
+curl -H "Host: hello.example.com" http://<ingress-controller-ip>/login
+Replace <ingress-controller-ip> with the actual IP address of your ingress controller.
+Host Header:
+If DNS is not set up, you can specify the host header directly in your request using tools like curl, as shown above.
+These methods will help you verify that the ingress routing is functioning as expected.   
+
+<!-- ----------------------------------------------------------------------- -->
+<!--     Challenges when using ingress routing in a complex application?     -->
+<!-- ----------------------------------------------------------------------- -->
+
+When using ingress routing in a complex application, several challenges may arise:
+
+Configuration Complexity:
+
+Managing multiple ingress resources and rules can become complicated, especially with numerous services and paths.
+Path Conflicts:
+
+Overlapping paths or hostnames can lead to routing conflicts, making it difficult to determine which service should handle a request.
+Security Concerns:
+
+Ensuring secure communication (e.g., TLS/SSL) can be challenging, especially when dealing with multiple domains and certificates.
+Performance Issues:
+
+Ingress controllers can become bottlenecks if not properly scaled, leading to latency or downtime during high traffic.
+Monitoring and Debugging:
+
+Troubleshooting issues with ingress routing can be difficult due to the abstraction layer it introduces, requiring additional monitoring tools.
+DNS Management:
+Properly configuring DNS entries for multiple services can be complex, especially in dynamic environments.
+Addressing these challenges often requires careful planning, monitoring, and possibly the use of additional tools or services. 
+
