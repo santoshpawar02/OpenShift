@@ -1,0 +1,82 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                       limit ranges in Kubernetes                        -->
+<!-- ----------------------------------------------------------------------- -->
+
+limit ranges in Kubernetes, which define acceptable values for resource limits and requests for containers. Key points include:
+
+YAML Syntax: The limit range is specified in a YAML manifest, detailing maximum and minimum values for CPU and memory.
+Maximum Values: For containers, the maximum CPU limit is 500 millicores and memory is 750 megabytes.
+Minimum Values: The minimum CPU limit is 10 millicores and memory is 5 megabytes.
+Default Values: If no limits are specified, default values of 100 millicores for CPU and 100 megabytes for memory are applied.
+Purpose: Limit ranges prevent excessive resource consumption by containers, especially in shared Kubernetes clusters, and ensure that containers have reasonable resource allocations.
+This understanding is crucial for developers to manage application behavior in production environments effectively. 
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                       Give me real-life examples                        -->
+<!-- ----------------------------------------------------------------------- -->    
+
+
+Example: Managing Resources in a Multi-Team Kubernetes Cluster
+
+Scenario: Imagine you work for a tech company that has multiple development teams using a shared Kubernetes cluster to deploy their applications. Each team has different resource needs based on their application requirements.
+
+Implementation of Limit Ranges:
+
+To ensure that no single team can monopolize the cluster resources, you implement limit ranges.
+You set a maximum CPU limit of 500 millicores and a memory limit of 750 megabytes for each container. This prevents any team from deploying a container that could consume excessive resources, which could impact other teams' applications.
+You also establish minimum limits of 10 millicores for CPU and 5 megabytes for memory, ensuring that even the smallest applications have enough resources to run effectively.
+Default Values:
+
+For containers that do not specify their resource limits, you configure default values of 100 millicores for CPU and 100 megabytes for memory. This helps maintain a baseline resource allocation, preventing containers from running with no limits at all.
+Benefits:
+This setup promotes fair resource distribution among teams, ensuring that one team's application does not negatively affect the performance of others.
+It also simplifies the deployment process for developers, as they do not need to worry about specifying resource limits every time they deploy a container.
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--         What would happen if no limits were set for containers?         -->
+<!-- ----------------------------------------------------------------------- -->
+
+If no limits are set for containers in a Kubernetes environment, several issues can arise:
+
+Resource Starvation:
+
+A container could consume all available CPU and memory resources, leading to resource starvation for other containers. This can cause other applications to slow down or crash due to lack of resources.
+Unpredictable Performance:
+
+Without limits, the performance of applications becomes unpredictable. Some containers may perform well under low load but could degrade significantly under high load, affecting overall application reliability.
+Increased Costs:
+
+In cloud environments, resource usage directly impacts costs. Uncontrolled resource consumption can lead to unexpectedly high bills, as you may be charged for the excess resources consumed.
+Difficult Troubleshooting:
+
+Identifying performance issues becomes more challenging without defined limits. It can be hard to determine which container is causing problems, complicating troubleshooting efforts.
+Cluster Instability:
+Overall cluster stability can be compromised. If one container behaves poorly, it can lead to cascading failures across the cluster, affecting multiple applications and services.
+By implementing limit ranges, you can prevent these issues and ensure a more stable and efficient Kubernetes environment.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--           impact of setting very high limits for containers?            -->
+<!-- ----------------------------------------------------------------------- -->
+
+Setting very high limits for containers in a Kubernetes environment can have several negative impacts:
+
+Resource Waste:
+
+High limits may lead to underutilization of resources. If containers are allocated more CPU and memory than they actually need, it results in wasted resources that could be better utilized by other applications.
+Increased Costs:
+
+In cloud environments, higher resource limits can lead to increased costs. You may end up paying for resources that are not being used effectively, impacting your budget.
+Potential for Abuse:
+
+Developers might take advantage of high limits, deploying applications that consume excessive resources. This can lead to resource contention, where multiple applications compete for the same resources, causing performance degradation.
+Cluster Instability:
+
+If many containers are set with high limits, it can lead to instability in the cluster. A sudden spike in resource usage from one or more containers can overwhelm the cluster, leading to crashes or degraded performance for all applications.
+Difficulty in Scaling:
+
+High limits can complicate scaling decisions. If containers are allowed to use excessive resources, it may be challenging to determine the actual resource needs for scaling applications effectively.
+Impact on Other Applications:
+High limits can negatively affect the performance of other applications running in the same cluster. If one application consumes a large portion of the available resources, it can starve other applications, leading to slow response times or failures.
+To maintain a balanced and efficient Kubernetes environment, it's essential to set reasonable limits that reflect the actual resource needs of your applications. 
+
