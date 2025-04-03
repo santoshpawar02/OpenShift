@@ -1,0 +1,71 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                 resource allocation within a Kubernetes                 -->
+<!-- ----------------------------------------------------------------------- -->
+
+In the current lecture, the focus is on managing resource allocation within a Kubernetes cluster that multiple teams may use. Key points include:
+
+Resource Quotas: These are used to limit the resources that teams can consume within a Kubernetes cluster, preventing one team from monopolizing resources.
+Types of Limits:
+Object Counts: Limits the number of Kubernetes resources (e.g., pods, services) that can be created.
+Compute Resources: Limits the total CPU, memory, and storage capacity that can be used within a namespace.
+Resource Quota Manifest: A specific manifest file is used to define quotas, specifying the maximum number of resources allowed.
+Creating Quotas: Quotas can be created using kubectl commands, and existing resources may not be affected by new quotas.
+Importance for Developers: Understanding quotas is crucial for developers, as it helps explain why certain actions may be denied by the Kubernetes cluster.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                 if a team exceeds their resource quota?                 -->
+<!-- ----------------------------------------------------------------------- -->
+If a team exceeds their resource quota in Kubernetes, the following consequences may occur:
+
+Resource Creation Denied: Any attempt to create new resources (like pods or services) that would exceed the defined quota will be denied. This means that the team cannot deploy additional applications or scale existing ones beyond their allocated limits.
+
+Modification Denied: If a team tries to modify an existing resource in a way that would exceed the quota (e.g., increasing the resource requests for a pod), the modification will be rejected.
+
+Operational Impact: This can lead to operational challenges, as teams may not be able to respond to increased demand or deploy new features if they hit their quotas.
+Understanding these limitations is essential for effective resource management within a shared Kubernetes environment. 
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                       Give me real-life examples                        -->
+<!-- ----------------------------------------------------------------------- -->
+Example: Managing Resources in a Cloud-Based Development Environment
+
+Scenario: Imagine you work for a large tech company that has multiple development teams working on different projects within a single Kubernetes cluster. Each team needs to deploy their applications, but you want to ensure that no single team can monopolize the resources.
+
+Implementation of Resource Quotas:
+
+Team A is developing a lightweight microservice that requires minimal resources. They might deploy 50 containers, each requesting only a small amount of CPU and memory.
+Team B, on the other hand, is working on a data-intensive application that requires a single container with 50 GB of RAM.
+Setting Quotas:
+
+To prevent Team B from consuming all the resources, you set a resource quota for each team:
+Team A: Allowed to create up to 50 pods and use a total of 5 CPUs and 10 GB of memory.
+Team B: Limited to 10 pods and a total of 10 CPUs and 20 GB of memory.
+Benefits:
+This setup ensures that both teams can work efficiently without interfering with each other’s resource needs.
+It prevents resource contention, allowing for smoother operations and better performance across the board.
+Why This Example is Relevant:
+
+As a systems engineer, understanding how to implement resource quotas in Kubernetes is crucial for managing cloud-native applications effectively.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--    How could you apply resource quotas in a multi-team environment?     -->
+<!-- ----------------------------------------------------------------------- -->
+
+In a multi-team environment using Kubernetes, resource quotas can be applied to manage and limit the resources each team can consume within a shared cluster. Here’s how you can do it:
+
+Define Resource Quotas:
+
+Create a ResourceQuota manifest file that specifies the limits for various resources, such as CPU, memory, and the number of objects (e.g., pods, services).
+For example, you can set a quota that allows a team to create only a certain number of pods or to use a specific amount of CPU and memory.
+Apply Quotas to Namespaces:
+
+Assign each team a separate namespace in the Kubernetes cluster.
+Apply the resource quota to the namespace, ensuring that the limits are enforced for all resources created within that namespace.
+Monitor Resource Usage:
+
+Use commands like kubectl get resourcequota to monitor the resource usage and ensure that teams are adhering to their quotas.
+This helps prevent any single team from monopolizing resources, which could impact other teams.
+Handle Denied Actions:
+If a team tries to create resources that exceed their quota, Kubernetes will deny the action. Teams should be encouraged to check their resource quotas if they encounter such issues.
+By implementing resource quotas, you can effectively manage resource allocation and prevent contention among multiple teams in a Kubernetes environment. 

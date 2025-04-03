@@ -11,3 +11,41 @@ A YAML file is used to define these resource requests and limits for containers 
 Millicores are used as a unit for CPU, where 1 CPU equals 1000 millicores.
 Resources can be set directly in the YAML file or using the kubectl set command.
 You can view resource requests and limits for pods on a node, and if the metrics API is installed, you can use the kubectl top command to see resource usage metrics.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--       What might happen if resource limits are not set for a pod?       -->
+<!-- ----------------------------------------------------------------------- -->
+
+If resource limits are not set for a pod in Kubernetes, several issues may arise:
+
+Resource Starvation: A pod can consume excessive resources (CPU and memory), potentially starving other pods running on the same node. This can lead to performance degradation or even crashes of other applications.
+
+Unpredictable Performance: Without limits, the performance of the pod can vary significantly based on the workload, leading to unpredictable behavior and making it difficult to manage application performance.
+
+Node Overload: If multiple pods without limits are scheduled on a node, they may collectively exceed the node's capacity, causing the node to become overloaded. This can lead to node instability or failure.
+
+Eviction of Pods: Kubernetes may evict pods if the node runs out of resources, which can disrupt services and lead to downtime.
+Setting resource limits helps ensure that each pod operates within defined boundaries, promoting stability and predictability in the cluster.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--           concept of limiting resources on pods in Kubernetes           -->
+<!-- ----------------------------------------------------------------------- -->
+concept of limiting resources on pods in Kubernetes, which is crucial for managing cloud-native applications effectively. Here’s a real-life example that relates to your role as a systems engineer and your interest in transitioning to a DevOps engineer:
+
+Example: Managing a Web Application in a Kubernetes Cluster
+
+Scenario: Imagine you are responsible for deploying a web application that experiences varying traffic loads throughout the day. During peak hours, the application needs more resources to handle user requests, while during off-peak hours, it can operate with fewer resources.
+
+Relevance: By using resource requests and limits in Kubernetes, you can ensure that your application runs smoothly without over-consuming resources, which is essential for maintaining performance and cost-effectiveness.
+
+Implementation:
+
+Resource Requests: You set a resource request for your web application pod to ensure it has at least 200 millicores of CPU and 512 MB of memory. This guarantees that the pod will only be scheduled on nodes that can provide these resources.
+Resource Limits: You also set a resource limit of 500 millicores of CPU and 1 GB of memory. This prevents the pod from consuming more resources than necessary, which could affect other applications running on the same cluster.
+Outcome: By configuring these resource requests and limits, you ensure that your web application remains responsive during high traffic while also optimizing resource usage during quieter times. This not only improves the application's performance but also helps in managing costs effectively.
+Breakdown of Connections:
+
+Isolation: Just like how you isolate processes in a system, Kubernetes isolates containers within pods, allowing you to manage resources effectively.
+Resource Management: Setting requests and limits is akin to budgeting resources for different tasks in your daily life, ensuring you have enough for essential needs while avoiding waste.
+Scalability: This approach allows your application to scale efficiently, adapting to changing demands without compromising on performance.
+This example illustrates how the concepts of resource requests and limits in Kubernetes can be applied in a real-world scenario, enhancing your understanding and preparing you for a DevOps role. 
