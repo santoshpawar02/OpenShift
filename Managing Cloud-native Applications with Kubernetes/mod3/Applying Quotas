@@ -69,3 +69,16 @@ This helps prevent any single team from monopolizing resources, which could impa
 Handle Denied Actions:
 If a team tries to create resources that exceed their quota, Kubernetes will deny the action. Teams should be encouraged to check their resource quotas if they encounter such issues.
 By implementing resource quotas, you can effectively manage resource allocation and prevent contention among multiple teams in a Kubernetes environment. 
+
+<!-- ----------------------------------------------------------------------- -->
+<!--   examples of resources that can be limited using Kubernetes quotas?    -->
+<!-- ----------------------------------------------------------------------- -->
+
+Here are some examples of resources that can be limited using Kubernetes quotas:
+
+Number of Pods: Limit the total number of Pods that can be created in a namespace.
+Number of Services: Restrict the total number of Services that can be created.
+CPU Requests: Set limits on the total CPU resources that can be requested by all containers in a namespace.
+Memory Requests: Define limits on the total memory that can be requested by all containers in a namespace.
+Storage Requests: Limit the total amount of storage that can be requested by PersistentVolumeClaims in a namespace.
+These quotas help ensure fair resource allocation among multiple teams using the same Kubernetes cluster. 
