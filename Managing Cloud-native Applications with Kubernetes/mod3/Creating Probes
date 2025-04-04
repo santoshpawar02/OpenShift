@@ -1,0 +1,137 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                            Types of Probes:                             -->
+<!-- ----------------------------------------------------------------------- -->
+
+HTTP Checks: Commonly used to check the status of applications that expose an HTTP interface, such as REST APIs. You configure a GET request with a specific path and port.
+Container Execution Checks: Executes a command within the pod to verify readiness, such as running an SQL command to check database readiness.
+TCP Socket Checks: Used for applications that communicate via TCP ports. It checks if a connection can be established on a specified port.
+Implementation: Probes can be added to a deployment using the kubectl edit command, specifying the probe type (readiness, liveness, or startup) and its parameters.
+This content sets the stage for understanding how to effectively monitor and manage applications in a Kubernetes environment.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--              implement a readiness probe in a deployment?               -->
+<!-- ----------------------------------------------------------------------- -->
+To implement a readiness probe in a Kubernetes deployment, you can follow these steps:
+
+Edit the Deployment: Use the kubectl edit command to modify your deployment resource.
+
+kubectl edit deployment <deployment-name>
+Add the Readiness Probe: In the container specification, add the readiness probe configuration. Here’s an example of how to configure it using an HTTP GET request:
+
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 15
+  timeoutSeconds: 1
+httpGet: Specifies the HTTP request to check the application’s health.
+path: The endpoint to check (e.g., /healthz).
+port: The port on which the application is running (e.g., 8080).
+initialDelaySeconds: The time to wait before performing the first check (e.g., 15 seconds).
+timeoutSeconds: The time to wait for a response before considering the check failed (e.g., 1 second).
+Save Changes: After adding the readiness probe configuration, save and exit the editor. Kubernetes will automatically apply the changes.
+This setup ensures that the application is only marked as ready when it successfully responds to the specified HTTP request. 
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                           real-life examples                            -->
+<!-- ----------------------------------------------------------------------- -->
+
+Real-Life Example: Monitoring a Web Application
+
+Imagine you are a systems engineer working on a web application that provides online banking services. Ensuring that the application is always available and functioning correctly is crucial for user satisfaction and security.
+
+HTTP Checks for Readiness Probe:
+
+You configure a readiness probe that sends an HTTP GET request to the /healthz endpoint of your application.
+This endpoint checks if the application is ready to handle requests, such as verifying database connections and ensuring that all necessary services are running.
+If the readiness probe fails, Kubernetes will not route traffic to this instance of the application, preventing users from experiencing downtime.
+Container Execution Checks for Liveness Probe:
+
+You implement a liveness probe that executes a command within the container, such as running a simple SQL query like SELECT 1.
+This command checks if the database is responsive. If the command fails, Kubernetes will restart the container, ensuring that the application remains available.
+TCP Socket Checks:
+If your application communicates over a TCP socket (for example, a messaging service), you can set up a TCP socket check.
+This probe attempts to connect to a specific TCP port. If the connection is successful, the application is considered healthy; if not, Kubernetes can take action, such as restarting the pod.
+<!-- ----------------------------------------------------------------------- -->
+<!--               implement a TCP socket check in Kubernetes?               -->
+<!-- ----------------------------------------------------------------------- -->
+
+To implement a TCP socket check in Kubernetes, you can follow these steps:
+
+Define the Probe in Your Pod Specification:
+You need to specify the TCP socket check in the pod's YAML configuration file under the livenessProbe, readinessProbe, or startupProbe section.
+
+Specify the Port: Indicate the port that the probe should check. If the probe can establish a successful connection to that port, it is considered successful.
+Here’s an example of how to implement a TCP socket check in a pod specification:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+  - name: example-container
+    image: example-image
+    livenessProbe:
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 15
+      timeoutSeconds: 1
+Key Components:
+
+tcpSocket: This indicates that a TCP socket check is being used.
+port: The port number that the probe will check (in this case, 8080).
+initialDelaySeconds: The time to wait before performing the first probe after the container starts.
+timeoutSeconds: The time to wait for a response before considering the probe failed.
+This configuration will allow Kubernetes to check if the application is listening on the specified TCP port. If the connection can be established, the probe is successful; otherwise, it fails.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                 What happens if a liveness probe fails?                 -->
+<!-- ----------------------------------------------------------------------- -->
+If a liveness probe fails in Kubernetes, the following behavior is expected:
+
+Container Restart: Kubernetes will automatically restart the container that failed the liveness probe. This is done to recover from situations where the application is in a non-responsive state or has crashed.
+
+Failure Count: Kubernetes keeps track of the number of consecutive failures of the liveness probe. If the probe fails a specified number of times (defined by the failureThreshold parameter), Kubernetes will take action (restart the container).
+
+Event Logging: Kubernetes logs events related to the failure of the liveness probe, which can be useful for debugging and monitoring the health of the application.
+
+Health Check Interval: The liveness probe is checked at regular intervals (defined by the periodSeconds parameter). If the application becomes healthy again, it will continue running without further restarts.
+Example Scenario:
+
+If a web application becomes unresponsive due to a bug or resource exhaustion, the liveness probe may fail.
+Kubernetes detects the failure and restarts the container.
+The application is then re-initialized, allowing it to recover from the unresponsive state.
+This mechanism helps ensure that applications remain available and can recover from transient issues without manual intervention.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--               implement a TCP socket check in Kubernetes?               -->
+<!-- ----------------------------------------------------------------------- -->
+To implement a TCP socket check in Kubernetes, you can follow these steps:
+
+Define the Probe in Your Pod Specification:
+You need to specify the TCP socket check in the pod's YAML configuration file under the livenessProbe, readinessProbe, or startupProbe section.
+
+Specify the Port: Indicate the port that the probe should check. If the probe can establish a successful connection to that port, it is considered successful.
+Here’s an example of how to implement a TCP socket check in a pod specification:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+  - name: example-container
+    image: example-image
+    livenessProbe:
+      tcpSocket:
+        port: 8080
+      initialDelaySeconds: 15
+      timeoutSeconds: 1
+Key Components:
+
+tcpSocket: This indicates that a TCP socket check is being used.
+port: The port number that the probe will check (in this case, 8080).
+initialDelaySeconds: The time to wait before performing the first probe after the container starts.
+timeoutSeconds: The time to wait for a response before considering the probe failed.
+This configuration will allow Kubernetes to check if the application is listening on the specified TCP port. If the connection can be established, the probe is successful; otherwise, it fails.
