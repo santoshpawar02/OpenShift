@@ -1,0 +1,85 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--                  strategies for updating applications                   -->
+<!-- ----------------------------------------------------------------------- -->
+strategies for updating applications deployed in a Kubernetes cluster. There are two main strategies discussed:
+
+Rolling Strategy:
+
+Updates are made gradually.
+New pods are created for the updated version while the old pods remain until the new ones are ready to serve requests.
+This ensures zero downtime during the update process.
+Recreate Strategy:
+All old pods are terminated at once before new pods are created.
+This can lead to a period where no pods are available to serve requests, resulting in downtime.
+This strategy is useful when the application cannot run multiple versions simultaneously.
+The lecture also covers how to configure these strategies within the deployment specifications in Kubernetes, including parameters like maxSurge and maxUnavailable.
+
+There are two main strategies for updating applications in Kubernetes:
+
+Rolling Strategy: Updates are made gradually, allowing for zero downtime.
+Recreate Strategy: All old pods are terminated at once before new pods are created, which may result in downtime.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                           real-life examples                            -->
+<!-- ----------------------------------------------------------------------- -->
+
+Example: Updating a Web Application
+
+Scenario: Imagine you are a DevOps engineer working for an e-commerce company that has a web application serving thousands of customers daily. You need to update the application from Version 1 to Version 2 without causing downtime.
+
+Rolling Strategy:
+
+You decide to use the rolling update strategy.
+As you deploy the new version, Kubernetes gradually replaces the old pods (Version 1) with new pods (Version 2).
+For instance, if you have three replicas running Version 1, Kubernetes will:
+Update Pod 1 to Version 2 while keeping Pods 2 and 3 running.
+Once Pod 1 is confirmed to be ready and serving requests, Pod 2 is updated next.
+This process continues until all pods are updated to Version 2.
+Relevance: This strategy ensures that there is always at least one pod available to handle customer requests, resulting in zero downtime during the update.
+Recreate Strategy:
+In a different scenario, suppose the application has a significant change that does not support running both versions simultaneously (e.g., a major database schema change).
+You opt for the recreate strategy.
+When you deploy Version 2, Kubernetes immediately terminates all existing pods running Version 1.
+After all old pods are destroyed, it starts creating new pods for Version 2.
+Relevance: This approach may lead to a brief period where the application is not available to users, but it allows for a clean slate for the new version.
+
+The rolling strategy is often preferred in production environments to maintain service availability, while the recreate strategy can be useful in specific situations where compatibility issues arise.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--               pros and cons of each deployment strategy?                -->
+<!-- ----------------------------------------------------------------------- -->
+Here are the pros and cons of the two deployment strategies: rolling strategy and recreate strategy.
+
+Rolling Strategy
+
+Pros:
+
+Zero Downtime: Ensures that at least some instances of the application are always available to handle requests during the update.
+Gradual Rollout: Allows for monitoring of the new version's performance before fully committing to it, making it easier to roll back if issues arise.
+User Experience: Provides a seamless experience for users, as they are less likely to notice any disruptions.
+Cons:
+
+Complexity: Requires the application to support running multiple versions simultaneously, which can complicate the architecture.
+Resource Usage: Temporarily increases resource usage since both old and new versions run concurrently during the update.
+State Management: Can be challenging if the application has shared state or persistent volumes that are not compatible with both versions.
+Recreate Strategy
+
+Pros:
+
+Simplicity: Easier to implement since it does not require the application to support multiple versions running at the same time.
+Clean Slate: Ensures that the new version starts with a fresh environment, which can be beneficial for major changes.
+Faster Deployment: Can be quicker to execute since it involves stopping all old instances before starting new ones.
+Cons:
+
+Downtime: There is a period where the application is unavailable, which can negatively impact user experience and business operations.
+Risk of Failure: If the new version has issues, there may be a complete service outage until the problem is resolved.
+User Impact: Users may experience disruptions, especially during peak usage times, leading to potential loss of revenue or customer dissatisfaction.
+Summary
+
+Rolling Strategy is ideal for applications requiring high availability and minimal disruption, while Recreate Strategy is suitable for simpler deployments or when significant changes are made that do not support multiple versions.
+
+
+
+
+
+
