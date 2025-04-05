@@ -78,8 +78,53 @@ Summary
 
 Rolling Strategy is ideal for applications requiring high availability and minimal disruption, while Recreate Strategy is suitable for simpler deployments or when significant changes are made that do not support multiple versions.
 
+<!-- ----------------------------------------------------------------------- -->
+<!--                 configure maxSurge and maxUnavailable?                  -->
+<!-- ----------------------------------------------------------------------- -->
+maxSurge: This parameter specifies the maximum number of pods that can be created above the desired number of replicas during an update. It can be set as an absolute number or a percentage.
+maxSurge: If set to 1, during an update, Kubernetes can create one additional pod beyond the desired replicas.
 
+maxUnavailable: This parameter specifies the maximum number of pods that can be unavailable during the update process. Like maxSurge, it can also be set as an absolute number or a percentage.
+maxUnavailable: If set to 1, at most one pod can be unavailable during the updat
 
+<!-- ----------------------------------------------------------------------- -->
+<!--           If both maxSurge and maxUnavailable are set to zero           -->
+<!-- ----------------------------------------------------------------------- -->
+If both maxSurge and maxUnavailable are set to zero in a Kubernetes deployment, the following will occur:
 
+No Additional Pods: Setting maxSurge to zero means that during an update, Kubernetes will not create any additional pods beyond the desired number of replicas. This means that the number of running pods will remain constant during the update process.
 
+No Unavailable Pods: Setting maxUnavailable to zero means that no pods can be unavailable during the update. This implies that all existing pods must remain operational and ready to serve requests throughout the update process.
+Implications
 
+No Downtime: While this configuration aims to prevent downtime, it can lead to a situation where the update cannot proceed if all existing pods must remain available and no new pods can be created.
+Stuck Updates: If an update requires changes that necessitate the termination of existing pods (e.g., changing the container image), the deployment may become stuck, as Kubernetes cannot scale down any pods to make room for the new ones.
+In summary, setting both maxSurge and maxUnavailable to zero can create a scenario where updates cannot be applied effectively, potentially leading to deployment issues.
+
+<!-- --------------------------------------------------------------------------- -->
+<!--  how k8s determines new pod is ready to receive requests in rolling update.-->
+<!-- -------------------------------------------------------------------------- -->
+Kubernetes determines when a new pod is ready to receive requests during a rolling update using readiness probes. Here’s how it works:
+
+Readiness Probes: These are checks defined in the pod specification that determine if a pod is ready to handle traffic. You can configure different types of probes:
+
+HTTP Probes: Kubernetes sends an HTTP request to a specified path and checks the response code.
+TCP Probes: Kubernetes attempts to open a TCP connection to the specified port.
+Exec Probes: Kubernetes runs a specified command inside the container and checks the exit status.
+Configuration: You can configure readiness probes in the pod template of your deployment YAML file. For example:
+
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 10
+Pod Lifecycle: When a new pod is created during a rolling update:
+
+Kubernetes starts the readiness probe checks based on the defined configuration.
+If the probe succeeds (e.g., the HTTP response is 200), the pod is marked as "ready" and can start receiving traffic.
+If the probe fails, the pod is not marked as ready, and traffic will not be routed to it.
+Scaling Down Old Pods: Only after the new pod is marked as ready will Kubernetes scale down the old pod. This ensures that there is always at least one pod available to handle requests during the update process.
+Summary
+
+Readiness probes are essential for ensuring that new pods are fully operational before they start receiving traffic, allowing for a smooth transition during rolling updates.
