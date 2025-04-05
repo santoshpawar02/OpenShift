@@ -222,6 +222,6 @@ explore deployment strategies for a Kubernetes cluster. The process involves:
 
 Creating a Deployment: Using the kubectl command to create a deployment with a specified name and five replicas.
 Understanding Update Strategies: The default update strategy is a rolling update, which allows for a maximum of 25% of pods to be unavailable during updates and a maximum surge of 25% more pods than the desired replicas.
-Monitoring Pods: You will observe the behavior of pods during an update by editing the deployment to change the image version from 1-external to 2-external.
+Monitoring Pods: You will observe the behavior of pods during an update by editing the deployment to cha    nge the image version from 1-external to 2-external.
 Pod Management: As the update occurs, Kubernetes manages the number of running pods, ensuring it does not exceed the surge limit while maintaining the desired number of replicas.
 Finally, you will verify the application logs to confirm the update and clean up the deployment afterward.
