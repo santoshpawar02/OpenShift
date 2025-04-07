@@ -39,7 +39,56 @@ History Tracking: You can always revert to previous versions of the code if some
 Accountability: The commit history provides a clear log of who made changes and when, which is essential for accountability in a team environment.
 
 
+# ---------------------------------------------------------------------------- #
+#               managing Git using Visual Studio Code (VS Code).               #
+# ---------------------------------------------------------------------------- #
+Source Control Management (SCM): VS Code has a source control view that can be enabled to manage Git repositories effectively.
+Single Git Repository: The course will primarily use one Git repository.
+Cloning Repositories: You can clone a Git repository using the command palette in VS Code by entering the remote URL.
+File Status: Git tracks files in two stages modified (changes made) and staged (ready for the next commit).
+Creating Commits: After staging files, you can create a commit with a message, which is stored in your local repository.
+Synchronizing Changes: To push local commits to a remote repository, you need to authenticate, typically using a GitHub access token.
+Initializing Repositories: You can initialize a new local Git repository, which can later be linked to a remote repository.
+
+# ---------------------------------------------------------------------------- #
+#          implications of using HTTPS vs SSH for Git authentication?          #
+# ---------------------------------------------------------------------------- #
+Using HTTPS and SSH for Git authentication has different implications:
+
+HTTPS:
+
+Ease of Use: Generally easier to set up, especially for beginners. You just need a username and password (or a personal access token).
+Firewall Friendly: Works well in environments with strict firewall rules, as it uses standard HTTPS ports (80 and 443).
+Credential Management: You may need to enter your credentials frequently unless you use a credential manager.
+SSH:
+
+Security: Provides a more secure method of authentication through key pairs (public and private keys).
+No Passwords: Once set up, you don’t need to enter your credentials for each operation, making it more convenient for frequent use.
+Initial Setup Complexity: Requires generating SSH keys and adding the public key to your Git hosting service, which can be more complex for beginners.
+Summary:
+
+HTTPS is simpler and more straightforward, while SSH offers enhanced security and convenience for regular users. The choice depends on your comfort level with setup and your security needs.
 
 
+# ---------------------------------------------------------------------------- #
+#                            In this guided exercise                           #
+# ---------------------------------------------------------------------------- #
+Install Git: 
 
+On Unix-based systems like Ubuntu, use the apt package manager.
+On Fedora, use DNF.
+On MacOS, check if Git is pre-installed using git --version.
+For Windows, visit Git SCM to install.
+Configure Git: 
+
+Set your username and email using git config --global user.name and git config --global user.email.
+Initialize a Local Git Repository: 
+
+Use Visual Studio Code to initialize your project directory as a Git repository.
+Stage and Commit Files: 
+
+Stage files you want to include in your commit and create a commit.
+Push to a Remote Repository:
+Create a repository on GitHub, generate a personal access token for authentication, and push your local commits to the remote repository.
+This exercise emphasizes the importance of version control and how to manage your code effectively using Git and GitHub. 
 
