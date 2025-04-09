@@ -1,0 +1,193 @@
+<!-- ----------------------------------------------------------------------- -->
+<!--               Source to Image (S2I) process in OpenShift                -->
+<!-- ----------------------------------------------------------------------- -->
+Source to Image (S2I) process in OpenShift, which allows developers to deploy applications from source code. Here are the key points:
+
+Container Images and Pods: OpenShift uses Kubernetes, where pods require container images to run applications. A container image is a binary package that includes the application and its dependencies.
+
+S2I Process: The S2I process converts source code into a container image. It involves:
+
+Cloning the source code from a Git repository.
+Downloading dependencies specified in files like package.json.
+Creating a new container image that combines the application with the necessary runtime.
+Deployment: Once the new container image is created, it is pushed to OpenShift's internal container registry. OpenShift can then deploy this new image by scaling up the new pod and scaling down the old one.
+
+Updating Applications: There are two methods to update applications:
+Manual Update: Developers modify the source code, push changes to the repository, and manually trigger a new build in OpenShift.
+Webhook Mechanism: This automates the process by using webhooks from platforms like GitHub to trigger builds whenever changes are pushed to the repository.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                  What is the S2I process in OpenShift?                  -->
+<!-- ----------------------------------------------------------------------- -->
+The Source to Image (S2I) process in OpenShift is a method for building container images directly from source code. Here’s a concise breakdown of the S2I process:
+
+Input: The process starts with the source code, typically stored in a Git repository.
+
+S2I Builder Image: A specific builder image is selected based on the programming language or framework (e.g., Node.js, Java). This builder image contains the necessary tools and runtime environment.
+
+Build Process:
+
+Cloning: The builder image clones the source code from the specified Git repository.
+Dependency Resolution: It reads configuration files (like package.json for Node.js) to identify and download all required dependencies.
+Image Creation: The builder combines the application code and its dependencies with the runtime environment to create a new container image.
+Output: The newly created container image is pushed to OpenShift's internal container registry, making it available for deployment.
+
+Deployment: OpenShift can then deploy the new image by creating a pod that runs the application.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--               What are the key steps in the S2I process?                -->
+<!-- ----------------------------------------------------------------------- -->
+The key steps in the Source to Image (S2I) process are as follows:
+
+Select a Builder Image:
+Choose an appropriate S2I builder image based on the programming language or framework of your application (e.g., Node.js, Java).
+
+Clone the Source Code:
+The builder image clones the source code from the specified Git repository.
+
+Download Dependencies:
+The build process reads configuration files (like package.json for Node.js) to identify and download all necessary dependencies.
+
+Build the Container Image:
+The builder combines the application source code and its dependencies with the runtime environment to create a new container image.
+
+Push the Container Image:
+The newly created container image is pushed to OpenShift's internal container registry.
+
+Deploy the Application:
+OpenShift uses the new container image to deploy the application by creating a pod that runs the application.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--      Example: Deploying a Web Application for a Local Coffee Shop       -->
+<!-- ----------------------------------------------------------------------- -->
+
+Scenario: A local coffee shop wants to create a web application to allow customers to place orders online.
+
+Using S2I Process:
+Source Code: The coffee shop's developer writes the application code using Node.js and stores it in a GitHub repository.
+Build Process:
+The developer selects the Node.js builder image in OpenShift.
+When the developer pushes the code to GitHub, OpenShift automatically triggers the S2I build process.
+The S2I process clones the repository, installs dependencies (like Express), and creates a container image of the application.
+Deployment:
+The new container image is pushed to OpenShift's internal registry.
+OpenShift automatically deploys the new image, allowing the coffee shop to update their online ordering system seamlessly.
+
+Breakdown of Connections:
+
+Source Code Management: Just like the coffee shop's developer manages their code in GitHub, you will need to understand version control systems in your future role.
+Automated Builds: The S2I process automates the build and deployment, which is a fundamental principle in DevOps to ensure continuous integration and delivery.
+Real-World Application: This example demonstrates how businesses leverage technology to improve customer experience, a concept you will encounter frequently in your career.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--    does OpSf know to update deployment after a new image is created?    -->
+<!-- ----------------------------------------------------------------------- -->
+Yes, OpenShift knows to update the deployment after a new container image is created through the following mechanisms:
+
+Internal Registry Notification:
+
+When a new container image is built and pushed to the internal container registry, OpenShift is automatically notified of this new image.
+Deployment Configuration:
+
+Each deployment in OpenShift is associated with a deployment configuration that specifies which container image to use. This configuration includes the image name and tag.
+Image Change Triggers:
+
+OpenShift can be configured to watch for changes in the container image. When a new image is detected (for example, a new version of the image with a different tag), OpenShift triggers an update to the deployment.
+Automatic Scaling:
+If the new pod created from the updated container image is successful in starting, OpenShift will automatically scale down the previous version of the deployment, ensuring that the application is running the latest version.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--             OC command line utility to manage applications              -->
+<!-- ----------------------------------------------------------------------- -->
+OC command line utility to manage applications in an OpenShift cluster. Here are the key points:
+
+Installation: You need to download and install the OC command line utility for your operating system (Linux, Mac, or Windows) and ensure it is accessible from anywhere on your system by adding it to your PATH.
+
+Authentication: You authenticate with your OpenShift cluster using a token obtained from the web console.
+
+Creating Applications: You can create a new application using the oc new-app command, specifying the application name, GitHub URL, and context directory.
+
+Exposing Services: After creating an application, you can expose it using the oc expose command to create a route for external access.
+
+Webhooks: You can set up a GitHub webhook to automatically trigger a rebuild of your application whenever changes are pushed to the repository.
+
+Cleanup: Finally, you learned how to clean up by deleting the created objects using the command line.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                    steps to set up a GitHub webhook?                    -->
+<!-- ----------------------------------------------------------------------- -->
+To set up a GitHub webhook for your OpenShift application, follow these steps:
+
+Navigate to Your GitHub Repository:
+
+Go to the repository where your application code is hosted.
+Access Settings:
+
+Click on the "Settings" tab in your repository.
+Select Webhooks:
+
+In the left sidebar, click on "Webhooks".
+Add a New Webhook:
+
+Click on the "Add webhook" button.
+Configure the Webhook:
+
+Payload URL: Enter the URL of your OpenShift cluster that you want GitHub to call. This should be the specific webhook URL for your Build configuration.
+Content Type: Set the content type to application/json.
+Secret: (Optional) You can add a secret for security purposes.
+Which events would you like to trigger this webhook?: Choose the events that will trigger the webhook, such as "Just the push event" for triggering on code pushes.
+Add the Webhook:
+
+Click the "Add webhook" button to save your settings.
+Test the Webhook:
+After adding, you can test the webhook to ensure it is configured correctly. GitHub will send a test payload to the specified URL.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--            How does a webhook trigger a build in OpenShift?             -->
+<!-- ----------------------------------------------------------------------- -->
+A webhook triggers a build in OpenShift by sending an HTTP request to a specific URL whenever a specified event occurs in your GitHub repository (like a code push). Here’s how it works:
+
+Webhook Configuration:
+You configure a webhook in your GitHub repository, specifying the payload URL that points to your OpenShift cluster's build configuration.
+
+Event Occurrence:
+When an event occurs (e.g., a push to the repository), GitHub sends an HTTP POST request to the configured payload URL. This request contains information about the event, such as the commit details.
+
+OpenShift Receives the Request:
+The OpenShift server listens for incoming requests at the specified URL. When it receives the webhook request from GitHub, it processes the information contained in the request.
+
+Triggering the Build:
+Based on the information received, OpenShift triggers a new build for the specified application. This is done using the build configuration associated with the application, which defines how to build the application from the source code.
+
+Build Execution:
+OpenShift executes the build process, which may include pulling the latest code from the repository, building the application, and creating a new image.
+
+Deployment:
+Once the build is successful, OpenShift can automatically deploy the new version of the application, making it available for use.
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--      Example: Deploying a Web Application in a DevOps Environment       -->
+<!-- ----------------------------------------------------------------------- -->
+
+Scenario: Imagine you are part of a DevOps team at a tech company that develops a web application for managing customer relationships (CRM). Your team uses OpenShift to deploy and manage the application.
+
+Using OC Command Line Utility:
+You start by installing the OC command line utility, which allows you to interact with your OpenShift cluster.
+After installation, you authenticate with the OpenShift cluster using a secure token, ensuring that only authorized users can deploy applications.
+
+Creating a New Application:
+You create a new branch in your GitHub repository for a feature update, such as adding a new dashboard to the CRM application.
+Using the command oc new-app, you deploy the application directly from your GitHub repository, specifying the branch that contains your new feature.
+
+Automatic Builds with Webhooks:
+To streamline the deployment process, you set up a GitHub webhook. This means that every time you push changes to the specified branch, GitHub automatically triggers a new build in OpenShift.
+This automation allows your team to see changes in real-time, improving collaboration and reducing the time it takes to get feedback on new features.
+
+Exposing the Application:
+After deploying the application, you use the command oc expose service to create a route, making the application accessible to users.
+This step is crucial for testing the new features in a live environment.
+
+Iterative Development:
+As you continue to develop the application, you make changes, push them to GitHub, and the webhook triggers new builds automatically.
+This iterative process allows for rapid development and deployment, which is a key principle in DevOps.
