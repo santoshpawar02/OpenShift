@@ -39,14 +39,13 @@ Successful Deployment: The application builds successfully, and you see a green 
 Source-to-Image (S2I) process, the build and deployment steps are closely related, each serving a distinct purpose in the application lifecycle. Here’s a concise breakdown of their relationship:
 
 Build Step
-
 Purpose: This step compiles the source code and prepares the application for deployment.
 Process:
 It takes the source code (e.g., from a Git repository) and processes it.
 Dependencies are downloaded, and the application is packaged into a container image.
 The resulting image is pushed to the internal OpenShift Container Platform Registry.
-Deployment Step
 
+Deployment Step
 Purpose: This step takes the built image and runs it as an application in the OpenShift environment.
 Process:
 It retrieves the image created during the build step.

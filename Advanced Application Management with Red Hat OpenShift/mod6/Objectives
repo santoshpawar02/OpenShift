@@ -1,0 +1,4 @@
+Describe the architecture of Kubernetes and Red Hat OpenShift Container Platform.
+Create standard Kubernetes resources.
+Expose services using OpenShift routes.
+Deploy an application using the Source-to- Image (S2I) facility of OpenShift Container Platform.
