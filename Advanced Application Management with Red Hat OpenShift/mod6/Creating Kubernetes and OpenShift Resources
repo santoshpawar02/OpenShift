@@ -147,3 +147,64 @@ Design your application to handle data loss gracefully. This may involve impleme
 Conclusion:
 
 While ephemeral databases can be useful in certain scenarios, implementing these strategies can help mitigate the risks associated with data loss. For production environments, it's generally advisable to use persistent storage solutions to ensure data integrity and availability.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                  oc command line utility in OpenShift.                  -->
+<!-- ----------------------------------------------------------------------- -->
+
+Logging In: Users must log in to the OpenShift console and verify their login using the oc whoami command.
+Instantiating a Template: The exercise involves instantiating the mysql-persistent template using the oc new-app command, specifying five parameters with the -p flag.
+Command Execution: The commands are executed in a terminal, and users are cautioned about typos, as they can lead to the creation of unwanted resources.
+Resource Management: Users learn to check the status of applications, describe pods, and understand the relationship between services and pods.
+Persistent Volume Claims (PVC): The exercise covers how to manage PVCs and their importance in retaining data.
+Executing Commands in Pods: Users can execute SQL commands within the MySQL pod to interact with databases.
+Port Forwarding: The exercise demonstrates how to set up port forwarding for local access to the MySQL database.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--           instantiate the mysql-persistent template using oc?           -->
+<!-- ----------------------------------------------------------------------- -->
+To instantiate the mysql-persistent template using the oc command line utility, you can follow these steps:
+
+Log in to OpenShift: Ensure you are logged in to your OpenShift console.
+
+Use the oc new-app command: The command to instantiate the template looks like this:
+
+oc new-app --template=mysql-persistent -p MYSQL_USER=<username> -p MYSQL_PASSWORD=<password> -p MYSQL_DATABASE=<database> -p MYSQL_ROOT_PASSWORD=<root_password> -p VOLUME_CAPACITY=<capacity>
+Replace the placeholders with your specific values:
+
+<username>: Your desired MySQL username.
+<password>: The password for the MySQL user.
+<database>: The name of the database you want to create.
+<root_password>: The root password for MySQL.
+<capacity>: The volume capacity (e.g., 10Gi for 10 gigabytes).
+Execute the command: Run the command in your terminal.
+Make sure to check for any typos, as they can lead to the creation of unwanted resources. 
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--               verify the parameters used in the command?                -->
+<!-- ----------------------------------------------------------------------- -->
+To verify the parameters used in the oc new-app command after instantiating the mysql-persistent template, you can follow these steps:
+
+Check the Application Status: Use the following command to see the status of your application:
+
+oc status
+This will provide an overview of the deployment and the resources created.
+
+Get Pod Details: To see the details of the pods created, use:
+
+oc get pods
+This command will list all the pods, including their names and statuses.
+
+Describe the Pod: To get detailed information about a specific pod, use the oc describe command:
+
+oc describe pod <pod_name>
+Replace <pod_name> with the name of the pod you want to inspect. This will show you the environment variables and configuration, including the parameters you specified.
+
+Check the Service: To verify the service created for your MySQL application, use:
+
+oc get services
+Then, describe the service to see its details:
+
+oc describe service mysql
+These commands will help you confirm that the parameters were set correctly during the instantiation of the template. 
