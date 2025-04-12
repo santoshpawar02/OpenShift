@@ -70,4 +70,37 @@ As a systems engineer, understanding this process will enhance your skills in ma
 By grasping the concept of routes and their practical application, you are building a solid foundation for your career transition.
 
 
+<!-- ----------------------------------------------------------------------- -->
+<!--          insights into routes using the OpenShift client (OC).          -->
+<!-- ----------------------------------------------------------------------- -->
+The steps include:
+Logging in to the OpenShift web console and preparing to use the OC command line.
+Deploying a PHP-based application using the OC new app command with a specified Docker image.
+Checking the status of the application and its logs using OC get and OC logs commands.
+Verifying the service configuration and ensuring it routes requests correctly.
+Creating a route for the service using the OC expose command, which generates a fully qualified domain name for accessing the application.
+Modifying the route by deleting the old one and creating a new one with a different name.
+This exercise emphasizes the efficiency of using the OC command line compared to the web console for managing applications in OpenShift. 
 
+
+<!-- ----------------------------------------------------------------------- -->
+<!--     Example: Deploying a Web Application for an E-commerce Business     -->
+<!-- ----------------------------------------------------------------------- -->
+
+Scenario: Imagine you are a systems engineer working for an e-commerce company that wants to launch a new online store. The company decides to use OpenShift to manage its applications.
+
+Deployment Process:
+
+You log in to the OpenShift web console and prepare to use the OC command line.
+You deploy a PHP-based application that serves as the backend for the online store using the OC new app command. This application will handle product listings, user accounts, and transactions.
+After deployment, you check the application’s status and logs to ensure everything is running smoothly.
+Service Verification:
+
+You verify that the service is correctly routing requests to the application. This is crucial because customers need to access the store without interruptions.
+You use the OC describe command to confirm that the service has an IP address and is connected to the running application pods.
+Creating a Route:
+
+To make the application accessible to customers, you create a route using the OC expose command. This generates a user-friendly URL, such as shop.mycompany.com, allowing customers to easily access the online store.
+You can also modify the route later if needed, for example, changing it to sale.mycompany.com during a promotional event.
+Outcome:
+The e-commerce site is now live, and customers can browse products and make purchases seamlessly. The use of OpenShift and its routing capabilities ensures that the application is scalable and can handle traffic efficiently.
